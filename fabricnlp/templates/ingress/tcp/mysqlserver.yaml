@@ -1,0 +1,18 @@
+# ----- Services exposed to the outside world ------
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysqlseevertcp
+  namespace: fabricrealtime
+  labels:
+    expose: external
+spec:
+  selector:
+    app: mysqlserver
+  ports:
+  - port: 3306
+    # port in the pod we map to
+    targetPort: 3306
+    protocol: TCP
+    name: "mysql"
+---

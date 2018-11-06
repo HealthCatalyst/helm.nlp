@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: fabric.nlp.solrserver
-  namespace: fabricnlp    
+  namespace: fabricnlp
   labels:
     app: solrserver
 spec:
@@ -11,7 +11,7 @@ spec:
   strategy:
     # We need to kill the existing Pod before creating an new one
     # for the new one to be able to attach the persistent disk.
-    type: Recreate        
+    type: Recreate
   selector:
     matchLabels:
       app: solrserver
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: solrserver
           image: healthcatalyst/fabric.nlp.docker.solr:1
-          imagePullPolicy: Always          
+          imagePullPolicy: Always
           volumeMounts:
             - name: solr-persistent-storage
               mountPath: /var/lib/solr
@@ -41,13 +41,13 @@ spec:
               - /opt/healthcatalyst/done.txt
             initialDelaySeconds: 60
             periodSeconds: 60
-            failureThreshold: 5              
+            failureThreshold: 5
           # livenessProbe:
           #   httpGet:
           #     path: /solr
           #     port: 8085
           #   initialDelaySeconds: 60
-          #   periodSeconds: 60 
+          #   periodSeconds: 60
           # readinessProbe:
           #   exec:
           #     command:
@@ -55,15 +55,15 @@ spec:
           #     - /opt/healthcatalyst/done.txt
           #   initialDelaySeconds: 5
           #   periodSeconds: 5
-          #   failureThreshold: 30          
+          #   failureThreshold: 30
       nodeSelector:
           joborsolr: solr
       # give pod more time to finish solr indexing
-      terminationGracePeriodSeconds: 10      
+      terminationGracePeriodSeconds: 10
       volumes:
       - name: solr-persistent-storage
         persistentVolumeClaim:
-          claimName: nlp.solrserver            
+          claimName: nlp.solrserver
       - name: solr-backup-storage
         persistentVolumeClaim:
-          claimName: nlp.solrserver.backup          
+          claimName: nlp.solrserver.backup

@@ -4,7 +4,7 @@ metadata:
 # name for this pod
   name: fabric.nlp.dnstester
 # namespace for this pod
-  namespace: fabricnlp  
+  namespace: fabricnlp
   labels:
     app: dnstester
 spec:
@@ -13,7 +13,7 @@ spec:
   strategy:
     # We need to kill the existing Pod before creating an new one
     # for the new one to be able to attach the persistent disk.
-    type: Recreate        
+    type: Recreate
   selector:
     matchLabels:
       app: dnstester
@@ -28,7 +28,7 @@ spec:
         name: dnstester
         env:
           - name: ENVNAME
-            value: $CUSTOMERID$
+            value: {{ .Values.customerid }}
           - name: SLACKURL
             value: "https://hooks.slack.com/services/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"
           - name: SLEEPINTERVAL
