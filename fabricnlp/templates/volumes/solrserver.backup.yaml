@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nlp.solrserver
-  namespace: fabricnlp    
+  name: nlp.solrserver.backup
+  namespace: fabricnlp
   labels:
-    type: azure  
-    namespace: fabricnlp  
+    type: azure
+    namespace: fabricnlp
 spec:
   #persistentVolumeReclaimPolicy: Delete
   capacity:
@@ -13,16 +13,21 @@ spec:
   storageClassName: default
   accessModes:
     - ReadWriteMany
+{{ if .Values.onprem }}
+  hostPath:
+    path: "/mnt/data/fabricnlp"
+{{ else }}
   azureFile:
     secretName: azure-secret
     secretNamespace: default
-    shareName: fabricnlp
+    shareName: fabricnlpbackups
     readOnly: false
   mountOptions:
     - dir_mode=0731
     - file_mode=0724
     - uid=1000
     - gid=1000
+{{ end }}
   claimRef:
     namespace: fabricnlp
-    name: nlp.solrserver
+    name: nlp.solrserver.backup

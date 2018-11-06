@@ -4,17 +4,29 @@ metadata:
   name: nlp.jobserver
   namespace: fabricnlp
   labels:
-    type: local  
+    type: azure
     namespace: fabricnlp
 spec:
-  #persistentVolumeReclaimPolicy: Delete
-  storageClassName: default
   capacity:
     storage: 8Gi
+  storageClassName: default
   accessModes:
     - ReadWriteMany
+{{ if .Values.onprem }}
   hostPath:
     path: "/mnt/data/fabricnlp"
+{{ else }}
+  azureFile:
+    secretName: azure-secret
+    secretNamespace: default
+    shareName: fabricnlp
+    readOnly: false
+  mountOptions:
+    - dir_mode=0731
+    - file_mode=0724
+    - uid=1000
+    - gid=1000
+{{ end }}
   claimRef:
     namespace: fabricnlp
     name: nlp.jobserver
