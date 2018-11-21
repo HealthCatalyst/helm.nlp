@@ -32,9 +32,9 @@ spec:
           - name: SLACKURL
             value: {{ .Values.slackUrl }}
           - name: SLEEPINTERVAL
-            value: {{ .Values.monitoringSleepInterval }}
+            value: !!str {{ .Values.monitoringSleepInterval }}
           - name: INTERVALBETWEENMESSAGES
-            value: {{ .Values.monitoringIntervalBetweenMessages }}
+            value: !!str {{ .Values.monitoringIntervalBetweenMessages }}
           - name: SERVER1
             value: mysqlserver
         resources:

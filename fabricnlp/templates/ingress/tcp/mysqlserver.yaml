@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mysqlseevertcp
-  namespace: fabricrealtime
+  namespace: fabricnlp
   labels:
     expose: external
 spec:

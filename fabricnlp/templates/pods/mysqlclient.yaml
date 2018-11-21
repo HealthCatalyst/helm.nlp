@@ -50,9 +50,9 @@ spec:
           - name: SLACKURL
             value: {{ .Values.slackUrl }}
           - name: SLEEPINTERVAL
-            value: {{ .Values.monitoringSleepInterval }}
+            value: !!str {{ .Values.monitoringSleepInterval }}
           - name: INTERVALBETWEENMESSAGES
-            value: {{ .Values.monitoringIntervalBetweenMessages }}
+            value: !!str {{ .Values.monitoringIntervalBetweenMessages }}
           - name: ENVNAME
             value: {{ .Values.environmentName }}
         resources:
