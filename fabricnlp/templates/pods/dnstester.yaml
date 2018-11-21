@@ -28,13 +28,13 @@ spec:
         name: dnstester
         env:
           - name: ENVNAME
-            value: {{ .Values.customerid }}
+            value: {{ .Values.environmentName }}
           - name: SLACKURL
-            value: "https://hooks.slack.com/services/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"
+            value: {{ .Values.slackUrl }}
           - name: SLEEPINTERVAL
-            value: "300"
+            value: {{ .Values.monitoringSleepInterval }}
           - name: INTERVALBETWEENMESSAGES
-            value: "3600"
+            value: {{ .Values.monitoringIntervalBetweenMessages }}
           - name: SERVER1
             value: mysqlserver
         resources:

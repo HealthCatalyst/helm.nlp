@@ -4,7 +4,7 @@ metadata:
 # name for this pod
   name: fabric.nlp.mysqlclient
 # namespace for this pod
-  namespace: fabricnlp  
+  namespace: fabricnlp
   labels:
     app: mysqlclient
 spec:
@@ -13,7 +13,7 @@ spec:
   strategy:
     # We need to kill the existing Pod before creating an new one
     # for the new one to be able to attach the persistent disk.
-    type: Recreate        
+    type: Recreate
   selector:
     matchLabels:
       app: mysqlclient
@@ -24,7 +24,7 @@ spec:
     spec:
       dnsConfig:
         options:
-          - name: single-request-reopen    
+          - name: single-request-reopen
       containers:
       - image: healthcatalyst/fabric.mysqlclient:1
         args: ["monitor"]
@@ -47,21 +47,23 @@ spec:
             value: "nlpsql"
           - name: COMMAND_TO_RUN
             value: monitor
+          - name: SLACKURL
+            value: {{ .Values.slackUrl }}
           - name: SLEEPINTERVAL
-            value: "300"
+            value: {{ .Values.monitoringSleepInterval }}
           - name: INTERVALBETWEENMESSAGES
-            value: "3600"
+            value: {{ .Values.monitoringIntervalBetweenMessages }}
           - name: ENVNAME
-            value: $CUSTOMERID$
+            value: {{ .Values.environmentName }}
         resources:
           limits:
             memory: "64Mi"
-            cpu: "250m"            
+            cpu: "250m"
         volumeMounts:
           - name: mysql-persistent-storage-backup
             # point the /var/lib/mysql folder inside the container to the volume called mysql-persistent-storage
             mountPath: /var/lib/mysql
-            subPath: mysqlbackups              
+            subPath: mysqlbackups
       volumes:
       - name: mysql-persistent-storage-backup
         persistentVolumeClaim:
