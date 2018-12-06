@@ -61,3 +61,21 @@ spec:
               port: 8083
             initialDelaySeconds: 600
             periodSeconds: 60
+          volumeMounts:
+            - name: "cacert"
+              mountPath: "/mnt/cacert"
+            - name: "sslcert"
+              mountPath: "/mnt/sslcert"
+      volumes:
+      - name: cacert
+        secret:
+          secretName: fabric-ca-cert
+          items:
+          - key: tls.crt
+            path: tls.crt
+      - name: sslcert
+        secret:
+          secretName: fabric-ssl-cert
+          items:
+          - key: tls.crt
+            path: tls.crt
