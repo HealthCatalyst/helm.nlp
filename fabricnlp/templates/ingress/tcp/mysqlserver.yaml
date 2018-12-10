@@ -5,7 +5,7 @@ metadata:
   name: mysqlseevertcp
   namespace: fabricnlp
   labels:
-    expose: external
+    expose: internal
 spec:
   selector:
     app: mysqlserver
